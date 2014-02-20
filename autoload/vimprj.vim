@@ -499,20 +499,19 @@ endfunction
 
 function! <SID>SourceVimprjFiles(sPath)
    "call confirm("sourcing files from: ". a:sPath)
-   
-   if isdirectory(a:sPath)
 
+   if isdirectory(a:sPath)
       " sourcing all *vim files in .vimprj dir
       let l:lSourceFilesList = split(glob(a:sPath.'/*vim'), '\n')
       let l:sThisFile = expand('%:p')
       for l:sFile in l:lSourceFilesList
-         exec 'source '.l:sFile
+         exec 'source '.escape(l:sFile, ' ')
       endfor
 
    elseif filereadable(a:sPath)
 
       " sourcing just one specified file
-      exec 'source '.a:sPath
+      exec 'source '.escape(a:sPath, ' ')
 
    endif
 endfunction
